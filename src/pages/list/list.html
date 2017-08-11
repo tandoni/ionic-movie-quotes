@@ -13,11 +13,10 @@
 <ion-content padding>
   <ion-list>
     <ion-item-sliding *ngFor="let quote of movieQuotesStream | async | reverse">
-      <button ion-item>
+      <button ion-item (click)='pushToDetail(quote)'>
         <h2>{{quote.quote}}</h2>
         <p>{{quote.movie}}</p>
       </button>
-
       <ion-item-options>
         <button ion-button color="danger" (click)='delete(quote.$key)'>
           <ion-icon name="trash"></ion-icon>
