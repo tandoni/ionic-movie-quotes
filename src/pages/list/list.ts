@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
+import { MovieQuote } from "../../models/movie-quotes";
 
 /**
  * Generated class for the ListPage page.
@@ -15,7 +17,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ListPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  movieQuotesStream: FirebaseListObservable<MovieQuote[]>
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private db: AngularFireDatabase) {
+      this.movieQuotesStream = this.db.list('quotes');
   }
 
   ionViewDidLoad() {
