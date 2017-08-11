@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 import { MovieQuote } from "../../models/movie-quotes";
 
@@ -20,12 +20,44 @@ export class ListPage {
   movieQuotesStream: FirebaseListObservable<MovieQuote[]>
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private db: AngularFireDatabase) {
-      this.movieQuotesStream = this.db.list('quotes');
+    private db: AngularFireDatabase, public alertCtrl: AlertController) {
+    this.movieQuotesStream = this.db.list('quotes');
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ListPage');
+  addQuote() {
+    const prompt = this.alertCtrl.create({
+      title: 'Add Quote',
+      inputs: [
+        {
+          name: 'quote',
+          placeholder: 'Quote that you like :D'
+        },
+        {
+          name: 'movie',
+          placeholder: 'From movie'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: (data) => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Add Quote',
+          handler: (data: MovieQuote) => {
+            if (data.quote && data.movie) {
+              this.movieQuotesStream.push(data);
+            } else {
+              console.log('Not a valid MovieQuote');
+              return false;
+            }
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 
 }

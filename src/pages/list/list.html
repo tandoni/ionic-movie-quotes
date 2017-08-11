@@ -1,13 +1,18 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Movie Quotes</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addQuote()">
+        <ion-icon name='add'></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
   <ion-list>
-    <button ion-item *ngFor="let quotes of movieQuotesStream | async">
+    <button ion-item *ngFor="let quotes of movieQuotesStream | async | reverse">
     <h2>{{quotes.quote}}</h2>
       <p>{{quotes.movie}}</p>
   </button>
