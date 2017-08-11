@@ -12,9 +12,18 @@
 
 <ion-content padding>
   <ion-list>
-    <button ion-item *ngFor="let quotes of movieQuotesStream | async | reverse">
-    <h2>{{quotes.quote}}</h2>
-      <p>{{quotes.movie}}</p>
-  </button>
+    <ion-item-sliding *ngFor="let quote of movieQuotesStream | async | reverse">
+      <button ion-item>
+        <h2>{{quote.quote}}</h2>
+        <p>{{quote.movie}}</p>
+      </button>
+
+      <ion-item-options>
+        <button ion-button color="danger" (click)='delete(quote.$key)'>
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>
